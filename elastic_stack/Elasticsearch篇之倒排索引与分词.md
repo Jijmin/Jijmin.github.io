@@ -74,10 +74,105 @@
     "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
   }
   ```
-  ![es-Standard分词器.png](../images/es-Standard分词器.png)
+  ![es-Standard分词器 ](../images/es-Standard分词器.png)
   - Simple
+  ```
+  POST _analyze
+  {
+    "analyzer": "simple",
+    "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
+  }
+  ```
+  ![es-Simple分词器](../images/es-Simple分词器.png)
   - Whitespace
+  ```
+  POST _analyze
+  {
+    "analyzer": "whitespace",
+    "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
+  }
+  ```
+  ![es-Whitespace分词器](../images/es-Whitespace分词器.png)
   - Stop
+  ```
+  POST _analyze
+  {
+    "analyzer": "stop",
+    "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
+  }
+  ```
+  ![es-Stop分词器](../images/es-Stop分词器.png)
   - Keyword
-  - Pattren
+  ```
+  POST _analyze
+  {
+    "analyzer": "keyword",
+    "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
+  }
+  ```
+  ![es-Keyword分词器](../images/es-Keyword分词器.png)
+  - Pattern
+  ```
+  POST _analyze
+  {
+    "analyzer": "pattern",
+    "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
+  }
+  ```
+  ![es-Pattren分词器](../images/es-Pattren分词器.png)
   - Language
+    - 提供了30+常见语言的分词器
+    - arabic，armenian......
+
+### 中文分词
+1. 常用分词系统
+  - IK
+    - 实现中英文单词的切分，支持ik_smart、ik_maxword等模式
+    - 可自定义词库，支持热更新分词词典
+    - https://github.com/medcl/elasticsearch-analysis-ik
+  - jieba
+    - python中最流行的分词系统，支持分词和此行标注
+    - 支持繁体分词、自定义词典、并行分词等
+    - https://github.com/singlee/elasticsearch-jieba-plugin
+2. 基于自然语言处理的分词系统
+  - Hanlp
+    - 由一系列模型与算法组成的Java工具包，目标是普及自然语言处理在生产环境中的应用
+    - https://github.com/hankcs/HanLp
+  - THULAC
+    - Thu Lexical Analyzer for Chinese,由清华大学自然语言处理与社会人文计算实验室研制推出的一套中文词法分析工具包，具有中文分词和此行标注功能
+    - https://github.com/microbun/elasticsearch-thulac-plugin
+
+### 自定义分词
+1. 当自带的分词无法满足需求时，可以自定义分词
+  - 通过自定义 Character、Tokenizer 和 Token Filter 实现
+2. Character Filters
+  - 在 Tokenizer 之前对原始文本进行处理，比如增加、删除或替换字符等
+  - 自带的如下：
+    - HTML Strip 去除 html 标签和转换 html 实体
+    - Mapping 进行字符替换操作
+    - Pattern Replace 进行正则匹配替换
+  - 会影响后续 tokenizer 解析的 position 和 offset 信息
+  ```
+  POST _analyze
+  {
+    "tokenizer": "keyword", # keyword 类型的 tokenizer 可以直接看到输出结果
+    "char_filter": ["html_strip"], # 指明要使用的 char_filters
+    "text": "<p>I&apos;m so<b>happy</b>!</p>"
+  }
+  ```
+3. Tokenizer
+  - 将原始文本按照一定规则切分为单词（term or token）
+  - 自带的如下：
+    - standard 按照单词进行分割
+    - letter 按照非字符类进行分割
+    - whitespace 按照空格进行分割
+    - UAX URL Email 按照 standard 分割，但不会分割邮箱和 url
+    - Ngram 和 Edge NGram 连词分割
+    - Path Hierarchy 按照文件路径进行切割
+```
+POST _analyze
+{
+  "tokenizer": "path_hierarchy",
+  "text": "/one/two/three"
+}    
+```    
