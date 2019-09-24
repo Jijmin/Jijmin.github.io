@@ -169,10 +169,191 @@
     - UAX URL Email 按照 standard 分割，但不会分割邮箱和 url
     - Ngram 和 Edge NGram 连词分割
     - Path Hierarchy 按照文件路径进行切割
-```
-POST _analyze
-{
-  "tokenizer": "path_hierarchy",
-  "text": "/one/two/three"
-}    
-```    
+  ```
+  POST _analyze
+  {
+    "tokenizer": "path_hierarchy",
+    "text": "/one/two/three"
+  }    
+  ```
+4. Token Filters
+  - 对于 tokenizer 输出的单词(term)进行增加、删除、修改等操作
+  - 自带的如下：
+    + lowercase 将所有 term 转换为小写
+    + stop 删除 stop words
+    + NGram 和 Edge NGram 连词分割
+    + Synonym 添加近义词的 term
+  ```
+  POST _analyze
+  {
+    "text": "a Hello, world!",
+    "tokenizer": "standard",
+    "filter": [
+      "stop",
+      "lowercase",
+      {
+        "type": "ngram",
+        "min_gram": 4,
+        "max_gram": 4
+      }
+    ]
+  }
+  ```
+5. 自定义分词
+  - 自定义分词需要在索引的配置中设定，如下所示：
+  ```
+  PUT test_index
+  {
+    "settings": {
+      "analysis": { # 分词配置，可以自定义
+        "char_filter": {},
+        "tokenizer": {},
+        "filter": {},
+        "analyzer": {}
+      }
+    }
+  }
+  ```
+  ![es-自定义分词器](../images/es-自定义分词器.png)
+  ```
+  PUT test_index
+  {
+    "settings": {
+      "analysis": {
+        "analyzer": {
+          "my_custom_analyzer": {
+            "type": "custom",
+            "tokenizer": "standrad",
+            "char_filter": [
+              "html_strip"
+            ],
+            "filter": [
+              "lowercase",
+              "asciifolding"
+            ]
+          }
+        }
+      }
+    }
+  }
+
+  POST test_index/_analyze
+  {
+    "analyzer": "my_custom_analyzer",
+    "text": "Is this <b>a box</b>"
+  }
+  ```
+  ![es-自定义分词2](../images/es-自定义分词2.png)
+  ```
+  PUT test_index2
+  {
+    "settings": {
+      "analysis": {
+        "analyzer": {
+          "my_custom_analyzer": {
+            "type": "custom",
+            "char_filter": [
+              "emoticons"
+            ],
+            "tokenizer": "punctuation",
+            "filter": [
+              "lowercase",
+              "english_stop"
+            ]
+          }
+        },
+        "tokenizer": {
+          "punctuation": {
+            "type": "pattern",
+            "pattern": "[.,!?]"
+          }
+        },
+        "char_filter": {
+          "emoticons": {
+            "type": "mapping",
+            "mapping": [
+              ":) => _happy_",
+              ":(" => _sad_
+            ]
+          }
+        },
+        "filter": {
+          "english_stop": {
+            "type": "stop",
+            "stopwords": "_english_"
+          }
+        }
+      }
+    }
+  }
+
+  POST test_index2/_analyze
+  {
+    "analyzer": "my_custom_analyzer",
+    "text": "I'm :) person,and you?"
+  }
+  ```
+
+### 分词使用说明
+1. 分词会在如下两个时机使用：
+  - 创建或更新文档时(Index Time)，会对相应的文档进行分词处理
+  - 查询时(Search Time)，会对查询语句进行分词
+
+### 索引时分词
+1. 索引时分词是通过配置 Index Mapping 中每个字段的 analyzer 属性实现的，如下：
+  - 不指定分词时，使用默认 standard
+  ```
+  PUT test_index
+  {
+    "mappings": {
+      "doc": {
+        "properties": {
+          "title": {
+            "type": "text",
+            "analyzer": "whitespace" # 指定分词器
+          }
+        }
+      }
+    }
+  }
+  ```
+
+### 查询时分词
+1. 查询时分词的指定方式有如下几种：
+  - 查询的时候通过 analyzer 指定分词器
+  ```
+  POST test_index/_search
+  {
+    "query": {
+      "match": {
+        "message": {
+          "query": "hello",
+          "analyzer": "standard"
+        }
+      }
+    }
+  }
+  ```
+  - 通过 index mapping 设置 search_analyzer 实现
+  ```
+  PUT test_index
+  {
+    "mappings": {
+      "doc": {
+        "properties": {
+          "title": {
+            "type": "text",
+            "analyzer": "whitespace",
+            "search_analyzer": "standard"
+          }
+        }
+      }
+    }
+  }
+  ```
+2. 一般不需要特别指定查询时分词器，直接使用索引时分词器即可，否则会出现无法匹配的情况
+
+### 分词的使用建议
+1. 明确字段是否需要分词，不需要分词的字段就将 type 设置为 keyword，可以节省空间提供写性能
+2. 善用`_analyze API`，查看文档的具体分词结果
+3. 动手测试
