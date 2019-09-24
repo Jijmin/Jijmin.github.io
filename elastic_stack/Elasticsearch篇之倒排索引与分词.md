@@ -223,7 +223,7 @@
         "analyzer": {
           "my_custom_analyzer": {
             "type": "custom",
-            "tokenizer": "standrad",
+            "tokenizer": "standard",
             "char_filter": [
               "html_strip"
             ],
@@ -271,7 +271,7 @@
         "char_filter": {
           "emoticons": {
             "type": "mapping",
-            "mapping": [
+            "mappings": [
               ":) => _happy_",
               ":(" => _sad_
             ]
