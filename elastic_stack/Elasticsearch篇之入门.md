@@ -49,6 +49,13 @@ JSON Object,由字段组成，常见的数据类型如下
 ```shell
 bin/elasticsearch -Ecluster.routing.allocation.disk.threshold_enabled=false -Epath.data=imooc
 bin/kibana
+
+# 后台启动 elasticsearch
+./elasticsearch -d
+ps aux|grep elasticsearch # 查看启动情况
+# 后台启动 kibana
+bin/kibana &
+exit # 退出终端
 ```
 
 ### 文档的 CURD
