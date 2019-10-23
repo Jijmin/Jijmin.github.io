@@ -413,18 +413,10 @@ GET test_search_index/_search
     {
       "query": {
         "bool": {
-          "must": [
-            {}
-          ],
-          "must_not": [
-            {}
-          ],
-          "should": [
-            {}
-          ],
-          "filter": [
-            {}
-          ]
+          "must": [{}],
+          "must_not": [{}],
+          "should": [{}],
+          "filter": [[{}]
         }
       }
     }
