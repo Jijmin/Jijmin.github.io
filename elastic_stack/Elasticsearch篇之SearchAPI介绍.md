@@ -188,7 +188,7 @@ GET test_search_index/_search
   }
 }
 ```
-![es-matchQuery流程](../images/es-matchQuery流程.png)
+![es-matchQuery流程](./images/es-matchQuery流程.png)
 2. 通过 operator 参数可以控制单词间的匹配关系，可选项为 or 和 and
 ```
 GET test_search_index/_search
@@ -229,9 +229,9 @@ GET test_search_index/_search
   - Field-length Norm 文档越短，相关性越高
 3. ES 目前主要有两个相关性算分模型，如下
   - TF/IDF 模型
-  ![es-相关性算分TF/IDF模型](../images/es-相关性算分TF_IDF模型.png)
+  ![es-相关性算分TF/IDF模型](./images/es-相关性算分TF_IDF模型.png)
   - BM25 模型 5.x 之后的默认模式
-  ![es-相关性算分BM25模型](../images/es-相关性算分BM25模型.png)
+  ![es-相关性算分BM25模型](./images/es-相关性算分BM25模型.png)
 4. 可以通过 explain 参数来查看具体的计算方法，但要注意
   - es 的算分是按照 shard 进行的，即 shard 的分数计算是相互独立的，所以在使用 explain 的时候注意分片数
   - 可以通过设置索引的分片数为1来避免这个问题

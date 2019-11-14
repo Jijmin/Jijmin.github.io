@@ -1,6 +1,6 @@
 ### 架构简介
-![es-logstash架构简介.png](../images/es-logstash架构简介.png)
-![es-logstash架构简介2.png](../images/es-logstash架构简介2.png)
+![es-logstash架构简介.png](./images/es-logstash架构简介.png)
+![es-logstash架构简介2.png](./images/es-logstash架构简介2.png)
 1. Pipeline
   - input-filter-output 的 3 阶段处理流程
   - 队列管理
@@ -9,12 +9,12 @@
   - 内部流转的数据表现形式
   - 原属数据在 input 被转换为 Event，在 output event 被转换为目标格式数据
   - 在配置文件中可以对 Event 中的属性进行增删改查
-![es-logstash架构简介3.png](../images/es-logstash架构简介3.png)
-![es-logstash架构简介4.png](../images/es-logstash架构简介4.png)
-![es-logstash架构简介5.png](../images/es-logstash架构简介5.png)
-![es-logstash架构简介6.png](../images/es-logstash架构简介6.png)
-![es-logstash架构简介7.png](../images/es-logstash架构简介7.png)
-![es-logstash架构简介8.png](../images/es-logstash架构简介8.png)
+![es-logstash架构简介3.png](./images/es-logstash架构简介3.png)
+![es-logstash架构简介4.png](./images/es-logstash架构简介4.png)
+![es-logstash架构简介5.png](./images/es-logstash架构简介5.png)
+![es-logstash架构简介6.png](./images/es-logstash架构简介6.png)
+![es-logstash架构简介7.png](./images/es-logstash架构简介7.png)
+![es-logstash架构简介8.png](./images/es-logstash架构简介8.png)
 
 ### Queue 的分类
 1. In Memory
@@ -79,7 +79,7 @@ pipeline.batch.delay:50
   - 队列总容量，默认是1g
 
 ### Logstash 命令行配置项
-![es-logstash命令行配置项.png](../images/es-logstash命令行配置项.png)
+![es-logstash命令行配置项.png](./images/es-logstash命令行配置项.png)
 
 ### Logstash 配置方式建议
 1. 线上环境推荐采用配置文件的方式来设定 logstash 的相关配置，这样可以减少犯错的机会，而且文件便于进行版本化管理

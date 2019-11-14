@@ -1,7 +1,7 @@
 ### 书与搜索引擎
 1. 目录页对应正排索引：文档 Id 到文档内容/单词的关联关系
 2. 索引页对应倒排索引：单词到文档 Id 的关联关系
-![es-正排索引和倒排索引](../images/es-正排索引和倒排索引.png)
+![es-正排索引和倒排索引](./images/es-正排索引和倒排索引.png)
 
 ### 倒排索引-查询流程
 1. 查询包含“搜索引擎”的文档
@@ -23,8 +23,8 @@
   - 单词频率（TF，Term Frequency），记录该单词在该文档中的出现次数，用于后续相关性算分
   - 位置（Position），记录单词在文档中的分词位置（多个），用于做赐予搜索（Phrase Query）
   - 偏移（Offset），记录单词在文档的开始和结束位置，用于做高亮显示
-![es-倒排列表](../images/es-倒排列表.png)
-![es-倒排索引](../images/es-倒排索引.png)
+![es-倒排列表](./images/es-倒排列表.png)
+![es-倒排索引](./images/es-倒排索引.png)
 
 ### 分词
 1. 分词是指将文本转换成一系列单词（term or token）的过程，也可以叫做文本分析，在 es 里面称为 Analysis
@@ -43,7 +43,7 @@
     "text": "hello world!"
   }
   ```
-  ![es-分词器](../images/es-分词器.png)
+  ![es-分词器](./images/es-分词器.png)
   - 可以直接指定索引中的字段进行测试
   ```
   POST test_index/_analyze
@@ -52,7 +52,7 @@
     "text": "hello world"
   }
   ```
-  ![es-分词器2](../images/es-分词器2.png)
+  ![es-分词器2](./images/es-分词器2.png)
   - 可以自定义分词器进行测试
   ```
   POST _analyze
@@ -62,7 +62,7 @@
     "text": "Hello World!"
   }
   ```
-  ![es-分词器3](../images/es-分词器3.png)
+  ![es-分词器3](./images/es-分词器3.png)
 
 ### 预定义的分词器
 1. es 自带如下的分词器
@@ -74,7 +74,7 @@
     "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
   }
   ```
-  ![es-Standard分词器 ](../images/es-Standard分词器.png)
+  ![es-Standard分词器 ](./images/es-Standard分词器.png)
   - Simple
   ```
   POST _analyze
@@ -83,7 +83,7 @@
     "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
   }
   ```
-  ![es-Simple分词器](../images/es-Simple分词器.png)
+  ![es-Simple分词器](./images/es-Simple分词器.png)
   - Whitespace
   ```
   POST _analyze
@@ -92,7 +92,7 @@
     "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
   }
   ```
-  ![es-Whitespace分词器](../images/es-Whitespace分词器.png)
+  ![es-Whitespace分词器](./images/es-Whitespace分词器.png)
   - Stop
   ```
   POST _analyze
@@ -101,7 +101,7 @@
     "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
   }
   ```
-  ![es-Stop分词器](../images/es-Stop分词器.png)
+  ![es-Stop分词器](./images/es-Stop分词器.png)
   - Keyword
   ```
   POST _analyze
@@ -110,7 +110,7 @@
     "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
   }
   ```
-  ![es-Keyword分词器](../images/es-Keyword分词器.png)
+  ![es-Keyword分词器](./images/es-Keyword分词器.png)
   - Pattern
   ```
   POST _analyze
@@ -119,7 +119,7 @@
     "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
   }
   ```
-  ![es-Pattren分词器](../images/es-Pattren分词器.png)
+  ![es-Pattren分词器](./images/es-Pattren分词器.png)
   - Language
     - 提供了30+常见语言的分词器
     - arabic，armenian......
@@ -214,7 +214,7 @@
     }
   }
   ```
-  ![es-自定义分词器](../images/es-自定义分词器.png)
+  ![es-自定义分词器](./images/es-自定义分词器.png)
   ```
   PUT test_index
   {
@@ -243,7 +243,7 @@
     "text": "Is this <b>a box</b>"
   }
   ```
-  ![es-自定义分词2](../images/es-自定义分词2.png)
+  ![es-自定义分词2](./images/es-自定义分词2.png)
   ```
   PUT test_index2
   {

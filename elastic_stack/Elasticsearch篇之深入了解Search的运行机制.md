@@ -93,7 +93,7 @@ GET test_search_index/_search
   - doc values 默认启用，除了 text 类型
 
 ### FieldData VS DocValues
-![es-FieldDataVSDocValues](../images/es-FieldDataVSDocValues.png)
+![es-FieldDataVSDocValues](./images/es-FieldDataVSDocValues.png)
 
 ### Fielddata
 1. Fielddata 默认是关闭的，可以通过如下 api 开启：

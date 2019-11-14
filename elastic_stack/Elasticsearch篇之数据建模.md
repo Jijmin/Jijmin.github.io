@@ -15,7 +15,7 @@
   - 第三范式
 
 ### ES 中的数据建模
-![es-es中的数据建模.png](../images/es-es中的数据建模.png)
+![es-es中的数据建模.png](./images/es-es中的数据建模.png)
 
 ### Mapping 字段的相关配置
 1. enbaled
@@ -130,7 +130,7 @@ PUT blog_index
 }
 ```
 2. 如果此时增加来一个很大的内容 content 字段，将他设置为text类型，这样当你取数据的时候是通过 _source 取的，每一次取 _source 的时候都会将 content 取出来，会导致性能很满
-![es-数据建模文章建模增加content.png](../images/es-数据建模文章建模增加content.png)
+![es-数据建模文章建模增加content.png](./images/es-数据建模文章建模增加content.png)
 ```
 GET blog_index/_search
 {
@@ -429,7 +429,7 @@ POST _reindex
 ### Reindex - Task
 1. 数据重建的时间受源索引文档规模的影响，当规模越大时，所需要的时间越多，此时需要通过设定 url 参数 wait_for_completion 为 false 来异步执行，ES 以 task 来描述此类执行任务
 2. ES 提供了 Task API 来查看任务的执行进度和相关数据
-![es-reindex-task.png](../images/es-reindex-task.png)
+![es-reindex-task.png](./images/es-reindex-task.png)
 
 ### 数据模型版本管理
 1. 对 Mapping 进行版本管理
@@ -452,9 +452,9 @@ POST _reindex
   - mapping 的信息存储在 cluster state 里面，过多的字段会导致 mapping 过大，最终导致更新变慢
 2. 通过实质 index.mapping.total_fields.limit 可以限定索引中最大字段数，默认是 1000
 3. 可以通过 key/value 的方式解决字段过多的问题，但并不完美
-![es-字段过多key_value的形式解决.png](../images/es-字段过多key_value的形式解决.png)
-![es-字段过多key_value的形式解决2.png](../images/es-字段过多key_value的形式解决2.png)
-![es-字段过多key_value的形式解决3.png](../images/es-字段过多key_value的形式解决3.png)
+![es-字段过多key_value的形式解决.png](./images/es-字段过多key_value的形式解决.png)
+![es-字段过多key_value的形式解决2.png](./images/es-字段过多key_value的形式解决2.png)
+![es-字段过多key_value的形式解决3.png](./images/es-字段过多key_value的形式解决3.png)
 
 ### Key/Value 方式详解
 1. 虽然通过这种方式可以极大的减少 Field 数目，但也有一些明显的坏处

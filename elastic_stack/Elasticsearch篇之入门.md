@@ -90,7 +90,7 @@ GET /test_index/doc/_search
   }
 }
 ```
-![es-查询文档response](../images/es-查询文档response.png)
+![es-查询文档response](./images/es-查询文档response.png)
 
 5. 批量创建文档
 ```
@@ -105,7 +105,7 @@ POST _bulk
   - index 创建文档时，会覆盖已经存在的
   - update 更新
   - delete 删除
-![es-批量创建文档response](../images/es-批量创建文档response.png)
+![es-批量创建文档response](./images/es-批量创建文档response.png)
 
 6. 批量查询文档
 ```

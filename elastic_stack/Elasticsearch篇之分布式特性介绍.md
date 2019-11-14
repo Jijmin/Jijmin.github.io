@@ -46,7 +46,7 @@
   - 分片数在索引创建时指定且后续不允许再更改，默认为5个
   - 分片有主分片和副本分片之分，以实现数据的高可用
   - 副本分片的数据由主分片同步，可以有多个，从而提高读取的吞吐量
-![es-分片](../images/es-分片.png)
+![es-分片](./images/es-分片.png)
 3. 此时增加节点是否能提高 test_index 的数据容量
   - 不能。因为只有3个分片，已经分布在3台节点上，新增的节点无法利用
 4. 此时增加副本数是否能提高 test_index 的读取吞吐量？
@@ -57,14 +57,14 @@
 
 ### 故障转移
 1. 集群由3个节点组成，此时集群状态是 green
-![es-故障转移0](../images/es-故障转移0.png)
+![es-故障转移0](./images/es-故障转移0.png)
 2. node1 所在机器宕机导致服务器终止，此时集群会如何处理？
   - node2 和 node3 发现 node1 无法响应一段时间后会发起 master 选举，比如这里选择 node2 为 master 节点。此时由于主分片 P0 下线，集群状态变为 Red
-  ![es-故障转移1](../images/es-故障转移1.png)
+  ![es-故障转移1](./images/es-故障转移1.png)
   - node2 发现主分片 P0 未分配，将 R0 提升为主分片。此时由于所有主分片都正常分配，集群状态变为 Yellow
-  ![es-故障转移2](../images/es-故障转移2.png)
+  ![es-故障转移2](./images/es-故障转移2.png)
   - node2 为 P0 和 P1 生成新的副本，集群状态变为绿色
-  ![es-故障转移3](../images/es-故障转移3.png)
+  ![es-故障转移3](./images/es-故障转移3.png)
 3. 模拟 node1 出故障，宕机
 ```
 ps aux|grep -i elasticsearch|grep 5200|grep node1
@@ -73,7 +73,7 @@ ps aux|grep -i elasticsearch|grep 5200|grep node1
 ### 文档分布式存储
 1. 文档最终会存储在分片上，如下图所示
   - Document1 最终存储在分片 P1 上
-  ![es-文档分布式存储](../images/es-文档分布式存储.png)
+  ![es-文档分布式存储](./images/es-文档分布式存储.png)
 2. Document1 是如何存储到分片 P1 的？选择 P1 的依据是什么？
   - 需要文档到分片的映射算法
 3. 目的
@@ -90,23 +90,23 @@ ps aux|grep -i elasticsearch|grep 5200|grep node1
 5. 该算法与主分片数相关，这也是分片数一旦确定后便不能更改的原因
 
 ### 文档创建的流程
-![es-文档创建的流程](../images/es-文档创建的流程.png)
+![es-文档创建的流程](./images/es-文档创建的流程.png)
 
 ### 文档读取的流程
-![es-文档读取的流程](../images/es-文档读取的流程.png)
+![es-文档读取的流程](./images/es-文档读取的流程.png)
 
 ### 文档批量创建的流程
-![es-文档批量创建的流程](../images/es-文档批量创建的流程.png)
+![es-文档批量创建的流程](./images/es-文档批量创建的流程.png)
 
 ### 文档批量读取的流程
-![es-文档批量读取的流程](../images/es-文档批量读取的流程.png)
+![es-文档批量读取的流程](./images/es-文档批量读取的流程.png)
 
 ### 脑裂问题
 1. 脑裂问题，英文为 split-brain，是分布式系统中的经典网络问题，如下图所示：
   - node2 与 node3 会重新选举 master，比如 node2 成为了新 master，此时会更新 cluster state
   - node1 自己组成集群后，也会更新 cluster state
 2. 同一个集群有两个 master，而且维护不同的 cluster state，网络恢复后无法选择正确的 master
-![es-脑裂问题](../images/es-脑裂问题.png)
+![es-脑裂问题](./images/es-脑裂问题.png)
 3. 解决方案为仅在可选举 master-eligible 节点数大于等于 quorum 时才可以进行 master 选举
   - quorum = master-eligible 节点数/2 + 1，例如3个 master-eligible 节点时，quorum 为2
   - 设定 discovery.zen.minimum_master_nodes 为 quorum 即可避免脑裂
@@ -124,13 +124,13 @@ ps aux|grep -i elasticsearch|grep 5200|grep node1
 ### 文档搜索实时性
 1. Lucene 便是采用来这种方案，它构建的单个倒排索引称为 segment，合在一起称为 Index，与 ES 中的 Index 概念不同。ES 中的一个 Shard 对应一个 Luncene Index。
 2. Luncene 会有一个专门的文件来记录所有的 segment 信息，称为 commit point
-![es-Luncene](../images/es-Luncene.png)
+![es-Luncene](./images/es-Luncene.png)
 
 ### 文档搜索实时性 - refresh
 1. segment 写入磁盘的过程依然很耗时，可以借助文件系统缓存的特性，先将 segment 在缓存中创建并开放查询来进一步提升实时性，该过程在 es 中被称为 refresh
 2. 在 refresh 之前文档会先存储在一个 buffer 中，refresh 时将 buffer 中的所有文档清空并生成 segment
 3. es 默认每1秒执行一次 refresh，因此文档的实时性被提高到了1s，这也是 es 被称为金实时(Near Real Time)的原因
-![es-文档搜索实时性-refresh](../images/es-文档搜索实时性-refresh.png)
+![es-文档搜索实时性-refresh](./images/es-文档搜索实时性-refresh.png)
 4. refresh 发生的时机主要有如下几种情况
   - 间隔时间到达时，通过 index.settings.refresh_interval 来设定，默认是1秒
   - index.buffer 占满时，其大小通过 indices.memory.index_buffer_size 设置，默认为 jvm heap 的 10%，所有 shard 共享
@@ -141,7 +141,7 @@ ps aux|grep -i elasticsearch|grep 5200|grep node1
   - es 引入 translog 机制。写入文档到 buffer 时，同时将该操作写入 translog。
   - translog 文件会即时写入磁盘(fsync)，6.x默认每个请求都会落盘，可以修改为每5秒写一次，这样风险便是丢失5秒内的数据，相关配置为index.translog.*
   - es 启动时会检查 translog 文件，并从中恢复数据
-![es-文档搜索实时性-translog(../images/es-文档搜索实时性-translog.png)
+![es-文档搜索实时性-translog(./images/es-文档搜索实时性-translog.png)
 2. flush 发生的时机主要有如下几种情况
   - 间隔时间达到时，默认是 30 分钟，5.x 之前可以通过 index.translog.flush_threshold_period 修改，之后无法修改
   - translog 占满时，其大小可以通过 index.translog.flush_threshold_size 控制，默认是 512mb，每个 index 有自己的 translog
@@ -153,7 +153,7 @@ ps aux|grep -i elasticsearch|grep 5200|grep node1
   - 更新 commit point 并写入磁盘
   - 执行 fsync 操作，将内存中的 segment 写入磁盘
   - 删除旧的 translog 文件
-![es-文档搜索实时性-flush](../images/es-文档搜索实时性-flush.png)
+![es-文档搜索实时性-flush](./images/es-文档搜索实时性-flush.png)
 
 ### 文档搜索实时性 - 删除与更新文档
 1. segemnt 一旦生成就不能更改，那么如果你要删除文档该如何操作？
@@ -164,7 +164,7 @@ ps aux|grep -i elasticsearch|grep 5200|grep node1
 
 ### 整体视角
 1. ES Index 与 Lucene Index 的术语对照如下所示
-![es-esIndex与luceneIndex整体视角](../images/es-esIndex与luceneIndex整体视角.png)
+![es-esIndex与luceneIndex整体视角](./images/es-esIndex与luceneIndex整体视角.png)
 
 ### Segment Merging
 1. 随着 segment 的增多，由于一次查询的 segment 数增多，查询速度会变慢

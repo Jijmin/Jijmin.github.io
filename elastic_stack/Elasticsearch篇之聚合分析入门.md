@@ -11,7 +11,7 @@
 1. 聚合分析，英文为 Aggregation，是 es 除搜索功能外提供的针对 es 数据做统计分析的功能
   - 功能丰富，提供 Bucket、Metric、Pipeline 等多种分析方式，可以满足大部分的分析需求
   - 实时性高，所有的计算记过都是即时返回的，而 hadoop 等大数据系统一般都是 T+1 级别的
-![es-聚合分析api.png](../images/es-聚合分析api.png)
+![es-聚合分析api.png](./images/es-聚合分析api.png)
 2. q=请告诉我公司目前在职人员工作岗位的分布情况？
 ```
 GET test_search_index/_search
@@ -744,11 +744,11 @@ GET test_search_index/_search
 ```
 
 ### Min聚合的执行流程
-![es-Min聚合的执行流程.png](../images/es-Min聚合的执行流程.png)
+![es-Min聚合的执行流程.png](./images/es-Min聚合的执行流程.png)
 
 ### Terms 聚合的执行流程
-![es-Terms聚合的执行流程.png](../images/es-Terms聚合的执行流程.png)
-![es-terms并不永远准确.png](../images/es-terms并不永远准确.png)
+![es-Terms聚合的执行流程.png](./images/es-Terms聚合的执行流程.png)
+![es-terms并不永远准确.png](./images/es-terms并不永远准确.png)
 1. Terms 不准确的原因
   - 数据分散在多个 Shard 上，Coordinating Node 无法得悉数据全貌
 2. Terms 不准确的解决方法
@@ -795,7 +795,7 @@ GET test_search_index/_search
   - 增大来整体的计算量，从而降低来响应时间
 
 ### 近似统计算法
-![es-近似统计算法.png](../images/es-近似统计算法.png)
+![es-近似统计算法.png](./images/es-近似统计算法.png)
 1. 在 ES 的聚合分析中，Cardinality 和 Percentile 分析使用的是近似统计算法
   - 结果是近似准确的，但不一定精准
   - 可以通过参数的调整使其结果精准，但同时也意味着更多的计算时间和更大的性能消耗
