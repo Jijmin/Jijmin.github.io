@@ -376,3 +376,127 @@ cat nginx.conf
 kubectl get svc -n ingress-nginx # 查看 ingress-nginx 暴露的端口
 kubectl get ingress
 ```
+
+### Ingress HTTPS 代理访问
+1. 创建证书，以及 cert 存储方式
+```shell
+mkdir https
+cd https
+openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=nginxsvc/0=nginxsvc"
+kubectl create secret tls tls-secret --key tls.key --cert tls.crt
+cp ../ingress-vh/deployment1.yaml .
+vim deployment1.yaml
+```
+2. deployment1.yaml 的规则
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: deployment3
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: nginx3
+    spec:
+      containers:
+        - name: nginx3
+          image: wangyanglinux/myapp:v3
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-3
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    name: nginx3
+```
+```shell
+kubectl apply -f deployment1.yaml
+kubectl get svc
+curl 10.106.93.203
+```
+3. Ingress.yaml 文件`vim https.ingress.yaml`
+```yaml
+apiVersion: extnesions/v1beta1
+kind: Ingress
+metadata:
+  name: https
+spec:
+  tls:
+    - hosts:
+      - www3.atguigu.com
+      secretName: tls-secret
+  rules:
+    - host: www3.atguigu.com
+      http:
+        paths:
+        - path: /
+          nackend:
+            serviceName: svc-3
+            servicePort: 80
+```
+```shell
+kubectl apply -f https.ingress.yaml
+# 查看暴露出去的端口
+kubectl get svc -n ingress-nginx
+# 还需要在 hosts 中进行配置
+```
+
+### Nginx 进行 basicAuth
+```shell
+yum -y install httpd
+mkdir basic-auth
+cd basic-auth
+htpasswd -c auth foo
+kubectl create secret generic basic-auth --from-file=auth
+vim ingress.yaml
+```
+```yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-with-auth
+  annotations:
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: basic-auth
+    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - foo'
+spec:
+  rules:
+  - host: auth.atguigu.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: svc-1
+          servicePort: 80
+```
+
+### Nginx 进行重写
+![重定向访问示意图.png](./images/重定向访问示意图.png)
+![nginx进行重写.png](./images/nginx进行重写.png)
+```yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-test
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: https://www3.atguigu.com:31802
+spec:
+  rules:
+  - host: re.atguigu.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: svc-1
+          servicePort: 80
+```
