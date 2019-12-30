@@ -1,0 +1,1148 @@
+<!DOCTYPE html><html><head>
+      <title>Elasticsearch&#x7BC7;&#x4E4B;&#x805A;&#x5408;&#x5206;&#x6790;&#x5165;&#x95E8;</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\Administrator\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.5.0\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h3 class="mume-header" id="%E4%BB%80%E4%B9%88%E6%98%AF%E8%81%9A%E5%90%88%E5%88%86%E6%9E%90">&#x4EC0;&#x4E48;&#x662F;&#x805A;&#x5408;&#x5206;&#x6790;&#xFF1F;</h3>
+
+<ol>
+<li>&#x641C;&#x7D22;&#x5F15;&#x64CE;&#x7528;&#x6765;&#x56DE;&#x7B54;&#x5982;&#x4E0B;&#x95EE;&#x9898;</li>
+</ol>
+<ul>
+<li>&#x8BF7;&#x544A;&#x8BC9;&#x6211;&#x5730;&#x5740;&#x4E3A;&#x4E0A;&#x6D77;&#x7684;&#x6240;&#x6709;&#x8BA2;&#x5355;&#xFF1F;</li>
+<li>&#x8BF7;&#x544A;&#x8BC9;&#x6211;&#x6700;&#x8FD1;1&#x5929;&#x5185;&#x521B;&#x5EFA;&#x4F46;&#x6CA1;&#x6709;&#x4ED8;&#x6B3E;&#x7684;&#x6240;&#x6709;&#x8BA2;&#x5355;&#xFF1F;</li>
+</ul>
+<ol start="2">
+<li>&#x805A;&#x5408;&#x5206;&#x6790;&#x53EF;&#x4EE5;&#x56DE;&#x7B54;&#x5982;&#x4E0B;&#x95EE;&#x9898;</li>
+</ol>
+<ul>
+<li>&#x8BF7;&#x544A;&#x8BC9;&#x6211;&#x6700;&#x8FD1;1&#x5468;&#x6BCF;&#x5929;&#x7684;&#x8BA2;&#x5355;&#x6210;&#x4EA4;&#x91CF;&#x6709;&#x591A;&#x5C11;&#xFF1F;</li>
+<li>&#x8BF7;&#x544A;&#x8BC9;&#x6211;&#x6700;&#x8FD1;1&#x4E2A;&#x6708;&#x6BCF;&#x5929;&#x7684;&#x5E73;&#x5747;&#x8BA2;&#x5355;&#x91D1;&#x989D;&#x662F;&#x591A;&#x5C11;&#xFF1F;</li>
+<li>&#x8BF7;&#x544A;&#x8BC9;&#x6211;&#x6700;&#x8FD1;&#x534A;&#x5E74;&#x5356;&#x7684;&#x6700;&#x706B;&#x7684;&#x524D;5&#x4E2A;&#x5546;&#x54C1;&#x662F;&#x54EA;&#x4E9B;&#xFF1F;</li>
+</ul>
+<h3 class="mume-header" id="%E8%81%9A%E5%90%88%E5%88%86%E6%9E%90">&#x805A;&#x5408;&#x5206;&#x6790;</h3>
+
+<ol>
+<li>&#x805A;&#x5408;&#x5206;&#x6790;&#xFF0C;&#x82F1;&#x6587;&#x4E3A; Aggregation&#xFF0C;&#x662F; es &#x9664;&#x641C;&#x7D22;&#x529F;&#x80FD;&#x5916;&#x63D0;&#x4F9B;&#x7684;&#x9488;&#x5BF9; es &#x6570;&#x636E;&#x505A;&#x7EDF;&#x8BA1;&#x5206;&#x6790;&#x7684;&#x529F;&#x80FD;</li>
+</ol>
+<ul>
+<li>&#x529F;&#x80FD;&#x4E30;&#x5BCC;&#xFF0C;&#x63D0;&#x4F9B; Bucket&#x3001;Metric&#x3001;Pipeline &#x7B49;&#x591A;&#x79CD;&#x5206;&#x6790;&#x65B9;&#x5F0F;&#xFF0C;&#x53EF;&#x4EE5;&#x6EE1;&#x8DB3;&#x5927;&#x90E8;&#x5206;&#x7684;&#x5206;&#x6790;&#x9700;&#x6C42;</li>
+<li>&#x5B9E;&#x65F6;&#x6027;&#x9AD8;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x8BA1;&#x7B97;&#x8BB0;&#x8FC7;&#x90FD;&#x662F;&#x5373;&#x65F6;&#x8FD4;&#x56DE;&#x7684;&#xFF0C;&#x800C; hadoop &#x7B49;&#x5927;&#x6570;&#x636E;&#x7CFB;&#x7EDF;&#x4E00;&#x822C;&#x90FD;&#x662F; T+1 &#x7EA7;&#x522B;&#x7684;<br>
+<img src="./images/es-%E8%81%9A%E5%90%88%E5%88%86%E6%9E%90api.png" alt="es-&#x805A;&#x5408;&#x5206;&#x6790;api.png"></li>
+</ul>
+<ol start="2">
+<li>q=&#x8BF7;&#x544A;&#x8BC9;&#x6211;&#x516C;&#x53F8;&#x76EE;&#x524D;&#x5728;&#x804C;&#x4EBA;&#x5458;&#x5DE5;&#x4F5C;&#x5C97;&#x4F4D;&#x7684;&#x5206;&#x5E03;&#x60C5;&#x51B5;&#xFF1F;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;people_per_job&quot;: {
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;job.keyword&quot;
+      }
+    }
+  }
+}
+</code></pre><ol start="3">
+<li>&#x4E3A;&#x4E86;&#x4FBF;&#x4E8E;&#x7406;&#x89E3;&#xFF0C;es &#x5C06;&#x805A;&#x5408;&#x5206;&#x6790;&#x4E3B;&#x8981;&#x5206;&#x4E3A;&#x5982;&#x4E0B;4&#x7C7B;</li>
+</ol>
+<ul>
+<li>Bucket&#xFF0C;&#x5206;&#x6876;&#x7C7B;&#x578B;&#xFF0C;&#x7C7B;&#x4F3C; SQL &#x4E2D;&#x7684; Group BY&#x8BED;&#x6CD5;</li>
+<li>Metric&#xFF0C;&#x6307;&#x6807;&#x5206;&#x6790;&#x7C7B;&#x578B;&#xFF0C;&#x5982;&#x8BA1;&#x7B97;&#x6700;&#x5927;&#x503C;&#x3001;&#x6700;&#x5C0F;&#x503C;&#x3001;&#x5E73;&#x5747;&#x503C;&#x7B49;&#x7B49;</li>
+<li>Pipleline&#xFF0C;&#x7BA1;&#x9053;&#x5206;&#x6790;&#x7C7B;&#x578B;&#xFF0C;&#x57FA;&#x4E8E;&#x4E0A;&#x4E00;&#x7EA7;&#x7684;&#x805A;&#x5408;&#x5206;&#x6790;&#x7ED3;&#x679C;&#x8FDB;&#x884C;&#x518D;&#x5206;&#x6790;</li>
+<li>Matrix&#xFF0C;&#x77E9;&#x9635;&#x5206;&#x6790;&#x7C7B;&#x578B;</li>
+</ul>
+<h3 class="mume-header" id="metric-%E8%81%9A%E5%90%88%E5%88%86%E6%9E%90">Metric &#x805A;&#x5408;&#x5206;&#x6790;</h3>
+
+<ol>
+<li>&#x4E3B;&#x8981;&#x5206;&#x5982;&#x4E0B;&#x4E24;&#x7C7B;&#xFF1A;</li>
+</ol>
+<ul>
+<li>&#x5355;&#x503C;&#x5206;&#x6790;&#xFF0C;&#x53EA;&#x8F93;&#x51FA;&#x4E00;&#x4E2A;&#x5206;&#x6790;&#x7ED3;&#x679C;
+<ul>
+<li>min&#xFF0C;max&#xFF0C;avg&#xFF0C;sum</li>
+<li>cardinality</li>
+</ul>
+</li>
+<li>&#x591A;&#x503C;&#x5206;&#x6790;&#xFF0C;&#x8F93;&#x51FA;&#x591A;&#x4E2A;&#x5206;&#x6790;&#x7ED3;&#x679C;
+<ul>
+<li>stats&#xFF0C;extended stats</li>
+<li>percentile&#xFF0C;percentile rank</li>
+<li>top hits</li>
+</ul>
+</li>
+</ul>
+<h3 class="mume-header" id="metric-%E8%81%9A%E5%90%88%E5%88%86%E6%9E%90-1">Metric &#x805A;&#x5408;&#x5206;&#x6790;</h3>
+
+<ol>
+<li>&#x8FD4;&#x56DE;&#x6570;&#x503C;&#x7C7B;&#x5B57;&#x6BB5;&#x7684;&#x6700;&#x5C0F;&#x503C; - Min</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;min_age&quot;: {
+      &quot;min&quot;: {
+        &quot;field&quot;: &quot;age&quot;
+      }
+    }
+  }
+}
+</code></pre><ol start="2">
+<li>&#x8FD4;&#x56DE;&#x6570;&#x503C;&#x7C7B;&#x5B57;&#x6BB5;&#x7684;&#x6700;&#x5927;&#x503C;- Max</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;max_age&quot;: {
+      &quot;max&quot;: {
+        &quot;field&quot;: &quot;age&quot;
+      }
+    }
+  }
+}
+</code></pre><ol start="3">
+<li>&#x8FD4;&#x56DE;&#x6570;&#x503C;&#x7C7B;&#x5B57;&#x6BB5;&#x7684;&#x5E73;&#x5747;&#x503C; - Avg</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;avg_age&quot;: {
+      &quot;avg&quot;: {
+        &quot;field&quot;: &quot;age&quot;
+      }
+    }
+  }
+}
+</code></pre><ol start="4">
+<li>&#x8FD4;&#x56DE;&#x6570;&#x503C;&#x7C7B;&#x5B57;&#x6BB5;&#x7684;&#x603B;&#x548C; - Sum</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;sum_age&quot;: {
+      &quot;sum&quot;: {
+        &quot;field&quot;: &quot;age&quot;
+      }
+    }
+  }
+}
+</code></pre><ol start="5">
+<li>&#x4E00;&#x6B21;&#x8FD4;&#x56DE;&#x591A;&#x4E2A;&#x805A;&#x5408;&#x7ED3;&#x679C;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;min_age&quot;: {
+      &quot;min&quot;: {
+        &quot;field&quot;: &quot;age&quot;
+      }
+    },
+    &quot;max_age&quot;: {
+      &quot;max&quot;: {
+        &quot;field&quot;: &quot;age&quot;
+      }
+    },
+    &quot;avg_age&quot;: {
+      &quot;avg&quot;: {
+        &quot;field&quot;: &quot;age&quot;
+      }
+    },
+    &quot;sum_age&quot;: {
+      &quot;sum&quot;: {
+        &quot;field&quot;: &quot;age&quot;
+      }
+    }
+  }
+}
+</code></pre><ol start="6">
+<li>Cardinality&#xFF0C;&#x610F;&#x4E3A;&#x96C6;&#x5408;&#x7684;&#x52BF;&#xFF0C;&#x6216;&#x8005;&#x57FA;&#x6570;&#xFF0C;&#x662F;&#x6307;&#x4E0D;&#x540C;&#x6570;&#x503C;&#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x7C7B;&#x4F3C; SQL &#x4E2D;&#x7684; distinct count &#x6982;&#x5FF5;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;count_of_job&quot;: {
+      &quot;cardinality&quot;: {
+        &quot;field&quot;: &quot;job.keyword&quot;
+      }
+    }
+  }
+}
+</code></pre><ol start="7">
+<li>Stats - &#x8FD4;&#x56DE;&#x4E00;&#x7CFB;&#x5217;&#x6570;&#x503C;&#x7C7B;&#x578B;&#x7684;&#x7EDF;&#x8BA1;&#x503C;&#xFF0C;&#x5305;&#x542B; min&#x3001;max&#x3001;avg&#x3001;sum &#x548C; count</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;stats_age&quot;: {
+      &quot;stats&quot;: {
+        &quot;field&quot;: &quot;age&quot;
+      }
+    }
+  }
+}
+</code></pre><ol start="8">
+<li>Extended Stats - &#x5BF9; stats &#x7684;&#x6269;&#x5C55;&#xFF0C;&#x5305;&#x542B;&#x4E86;&#x66F4;&#x591A;&#x7684;&#x7EDF;&#x8BA1;&#x6570;&#x636E;&#xFF0C;&#x6BD4;&#x5982;&#x65B9;&#x5DEE;&#x3001;&#x6807;&#x51C6;&#x5DEE;&#x7B49;&#x7B49;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;stats_age&quot;: {
+      &quot;extended_stats&quot;: {
+        &quot;field&quot;: &quot;age&quot;
+      }
+    }
+  }
+}
+</code></pre><ol start="9">
+<li>Percentile - &#x767E;&#x5206;&#x4F4D;&#x6570;&#x7EDF;&#x8BA1;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code># percents &#x53EF;&#x4EE5;&#x53BB;&#x6389;
+GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;per_age&quot;: {
+      &quot;percentiles&quot;: {
+        &quot;field&quot;: &quot;salary&quot;,
+        &quot;percents&quot;: [
+          95,
+          99,
+          99.9
+        ]
+      }
+    }
+  }
+}
+</code></pre><ol start="10">
+<li>Percentile Rank - &#x767E;&#x5206;&#x4F4D;&#x6570;&#x7EDF;&#x8BA1;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;per_salary&quot;: {
+      &quot;percentile_ranks&quot;: {
+        &quot;field&quot;: &quot;salary&quot;,
+        &quot;values&quot;: [
+          11000,
+          30000
+        ]
+      }
+    }
+  }
+}
+</code></pre><ol start="11">
+<li>Top Hits - &#x4E00;&#x822C;&#x7528;&#x4E8E;&#x5206;&#x6876;&#x540E;&#x83B7;&#x53D6;&#x8BE5;&#x6876;&#x5185;&#x6700;&#x5339;&#x914D;&#x7684;&#x9876;&#x90E8;&#x6587;&#x6863;&#x5217;&#x8868;&#xFF0C;&#x5373;&#x8BE6;&#x60C5;&#x6570;&#x636E;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;jobs&quot;: {
+      &quot;terms&quot;: {
+        &quot;fields&quot;: &quot;job.keyword&quot;,
+        &quot;size&quot;: 10
+      },
+      &quot;aggs&quot;: {
+        &quot;top_employee&quot;: {
+          &quot;top_hits&quot;: {
+            &quot;size&quot;: 10,
+            &quot;sort&quot;: [
+              {
+                &quot;age&quot;: {
+                  &quot;order&quot;: &quot;desc&quot;
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre><h3 class="mume-header" id="bucket-%E8%81%9A%E5%90%88%E5%88%86%E6%9E%90">Bucket &#x805A;&#x5408;&#x5206;&#x6790;</h3>
+
+<ol>
+<li>Bucket&#xFF0C;&#x610F;&#x4E3A;&#x6876;&#xFF0C;&#x5373;&#x6309;&#x7167;&#x4E00;&#x5B9A;&#x7684;&#x89C4;&#x5219;&#x5C06;&#x6587;&#x6863;&#x5206;&#x914D;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x6876;&#x4E2D;&#xFF0C;&#x8FBE;&#x5230;&#x5206;&#x7C7B;&#x5206;&#x6790;&#x7684;&#x76EE;&#x7684;</li>
+<li>&#x6309;&#x7167; Bucket &#x7684;&#x5206;&#x6876;&#x7B56;&#x7565;&#xFF0C;&#x5E38;&#x89C1;&#x7684; Bucket &#x805A;&#x5408;&#x5206;&#x6790;&#x5982;&#x4E0B;&#xFF1A;</li>
+</ol>
+<ul>
+<li>Terms</li>
+<li>Range</li>
+<li>Date Range</li>
+<li>Histogram</li>
+<li>Date Histogram</li>
+</ul>
+<ol start="3">
+<li>Terms - &#x8BE5;&#x5206;&#x6876;&#x7B56;&#x7565;&#x6700;&#x7B80;&#x5355;&#xFF0C;&#x76F4;&#x63A5;&#x6309;&#x7167; term &#x6765;&#x5206;&#x6876;&#xFF0C;&#x5982;&#x679C;&#x662F; text &#x7C7B;&#x578B;&#xFF0C;&#x5219;&#x6309;&#x7167;&#x5206;&#x8BCD;&#x540E;&#x7684;&#x7ED3;&#x679C;&#x5206;&#x6876;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;jobs&quot;: {
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;job.keyword&quot;,
+        &quot;size&quot;: 5
+      }
+    }
+  }
+}
+</code></pre><ol start="4">
+<li>Range - &#x901A;&#x8FC7;&#x6307;&#x5B9A;&#x6570;&#x503C;&#x7684;&#x8303;&#x56F4;&#x6765;&#x8BBE;&#x5B9A;&#x5206;&#x6876;&#x89C4;&#x5219;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code># ranges &#x6307;&#x5B9A;&#x6BCF;&#x4E2A; range &#x7684;&#x8303;&#x56F4;
+GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;salary_range&quot;: {
+      &quot;range&quot;: {
+        &quot;field&quot;: &quot;salary&quot;,
+        &quot;ranges&quot;: [
+          {
+            &quot;key&quot;: &quot;&lt;10000&quot;,
+            &quot;to&quot;: 10000
+          },
+          {
+            &quot;from&quot;: 10000,
+            &quot;to&quot;: 20000
+          },
+          {
+            &quot;key&quot;: &quot;&gt;20000&quot;
+            &quot;from&quot;: 20000
+          }
+        ]
+      }
+    }
+  }
+} 
+</code></pre><ol start="5">
+<li>Date Range - &#x901A;&#x8FC7;&#x6307;&#x5B9A;&#x65E5;&#x671F;&#x7684;&#x8303;&#x56F4;&#x6765;&#x8BBE;&#x5B9A;&#x5206;&#x6876;&#x89C4;&#x5219;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code># range&#xFF1A;&#x5173;&#x952E;&#x8BCD; fromat&#xFF1A;&#x6307;&#x5B9A;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x7684;&#x65E5;&#x671F;&#x683C;&#x5F0F; from to &#xFF1A;&#x6307;&#x5B9A;&#x65E5;&#x671F;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; date math
+GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;date_range&quot;: {
+      &quot;range&quot;: {
+        &quot;field&quot;: &quot;birth&quot;,
+        &quot;format&quot;: &quot;yyyy&quot;,
+        &quot;ranges&quot;: [
+          {
+            &quot;from&quot;: &quot;1980&quot;,
+            &quot;to&quot;: &quot;1990&quot;
+          },
+          {
+            &quot;from&quot;: &quot;1990&quot;,
+            &quot;to&quot;: &quot;2000&quot;
+          },
+          {
+            &quot;from&quot;: &quot;2000&quot;
+          }
+        ]
+      }
+    }
+  }
+}
+</code></pre><ol start="6">
+<li>Historgram - &#x76F4;&#x65B9;&#x56FE;&#xFF0C;&#x4EE5;&#x56FA;&#x5B9A;&#x95F4;&#x9694;&#x7684;&#x7B56;&#x7565;&#x6765;&#x5206;&#x5272;&#x6570;&#x636E;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code># histogram&#xFF1A;&#x5173;&#x952E;&#x8BCD; interval&#xFF1A;&#x6307;&#x5B9A;&#x95F4;&#x9694;&#x5927;&#x5C0F; extended_bounds&#xFF1A;&#x6307;&#x5B9A;&#x6570;&#x636E;&#x8303;&#x56F4;
+GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;salary_hist&quot;: {
+      &quot;histogram&quot;: {
+        &quot;filed&quot;: &quot;salary&quot;,
+        &quot;interval&quot;: 5000,
+        &quot;extended_bounds&quot;: {
+          &quot;min&quot;: 0,
+          &quot;max&quot;: 40000
+        }
+      }
+    } 
+  }
+}
+</code></pre><ol start="7">
+<li>Date Historgram - &#x9488;&#x5BF9;&#x65E5;&#x671F;&#x7684;&#x76F4;&#x65B9;&#x56FE;&#x6216;&#x8005;&#x67F1;&#x72B6;&#x56FE;&#xFF0C;&#x662F;&#x65F6;&#x5E8F;&#x6570;&#x636E;&#x4E2D;&#x5E38;&#x7528;&#x7684;&#x805A;&#x5408;&#x5206;&#x6790;&#x7C7B;&#x578B;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;by_year&quot;: {
+      &quot;date_histogram&quot;: {
+        &quot;filed&quot;: &quot;birth&quot;,
+        &quot;interval&quot;: &quot;year&quot;,
+        &quot;format&quot;: &quot;yyyy&quot;
+      }
+    }
+  }
+}
+</code></pre><h3 class="mume-header" id="bucket-metric-%E8%81%9A%E5%90%88%E5%88%86%E6%9E%90">Bucket + Metric &#x805A;&#x5408;&#x5206;&#x6790;</h3>
+
+<ol>
+<li>BUcket &#x805A;&#x5408;&#x5206;&#x6790;&#x5141;&#x8BB8;&#x901A;&#x8FC7;&#x6DFB;&#x52A0;&#x5B50;&#x5206;&#x6790;&#x6765;&#x8FDB;&#x4E00;&#x6B65;&#x8FDB;&#x884C;&#x5206;&#x6790;&#xFF0C;&#x8BE5;&#x5B50;&#x5206;&#x6790;&#x53EF;&#x4EE5;&#x662F; Bucket &#x4E5F;&#x53EF;&#x4EE5;&#x662F; Metric&#x3002;&#x8FD9;&#x4E5F;&#x4F7F;&#x5F97; es &#x7684;&#x805A;&#x5408;&#x5206;&#x6790;&#x80FD;&#x529B;&#x53D8;&#x5F97;&#x5F02;&#x5E38;&#x5F3A;&#x5927;</li>
+<li>&#x5206;&#x6876;&#x540E;&#x518D;&#x5206;&#x6876;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;jobs&quot;: {
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;job.keyword&quot;,
+        &quot;size&quot;: 10
+      },
+      &quot;aggs&quot;: {
+        &quot;age_range&quot;: {
+          &quot;range&quot;: {
+            &quot;field&quot;: &quot;age&quot;,
+            &quot;range&quot;: {
+              { &quot;to&quot;: 20 },
+              { &quot;from&quot;: 20, &quot;to&quot;: 30 },
+              { &quot;from&quot;: 30 }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre><ol start="3">
+<li>&#x5206;&#x6876;&#x540E;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x5206;&#x6790;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;jobs&quot;: {
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;job.keyword&quot;,
+        &quot;size&quot;: 10
+      },
+      &quot;aggs&quot;: {
+        &quot;salary&quot;: {
+          &quot;stats&quot;: {
+            &quot;field&quot;: &quot;salary&quot;
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre><h3 class="mume-header" id="pipeline-%E8%81%9A%E5%90%88%E5%88%86%E6%9E%90">Pipeline &#x805A;&#x5408;&#x5206;&#x6790;</h3>
+
+<ol>
+<li>&#x9488;&#x5BF9;&#x805A;&#x5408;&#x5206;&#x6790;&#x7684;&#x7ED3;&#x679C;&#x518D;&#x6B21;&#x8FDB;&#x884C;&#x805A;&#x5408;&#x5206;&#x6790;&#xFF0C;&#x800C;&#x4E14;&#x652F;&#x6301;&#x94FE;&#x5F0F;&#x8C03;&#x7528;&#xFF0C;&#x53EF;&#x4EE5;&#x56DE;&#x7B54;&#x5982;&#x4E0B;&#x95EE;&#x9898;&#xFF1A;</li>
+</ol>
+<ul>
+<li>&#x8BA2;&#x5355;&#x6708;&#x5E73;&#x5747;&#x9500;&#x552E;&#x989D;&#x662F;&#x591A;&#x5C11;&#xFF1F;</li>
+</ul>
+<pre data-role="codeBlock" data-info class="language-"><code>POST order/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;sales_per_month&quot;: {
+      &quot;date_histogram&quot;: {
+        &quot;field&quot;: &quot;date&quot;,
+        &quot;interval&quot;: &quot;month&quot;
+      },
+      &quot;aggs&quot;: {
+        &quot;slaes&quot;: {
+          &quot;sum&quot;: {
+            &quot;filed&quot;: &quot;price&quot;
+          }
+        }
+      }
+    },
+    &quot;avg_monthly_sales&quot;: {
+      &quot;avg_bucket&quot;: {
+        &quot;buckets_path&quot;: &quot;sales_per_month&gt;sales&quot;
+      }
+    }
+  }
+}
+</code></pre><ol start="2">
+<li>Pipeline &#x7684;&#x5206;&#x6790;&#x7ED3;&#x679C;&#x4F1A;&#x8F93;&#x51FA;&#x5230;&#x539F;&#x7ED3;&#x679C;&#x4E2D;&#xFF0C;&#x6839;&#x636E;&#x8F93;&#x51FA;&#x4F4D;&#x7F6E;&#x7684;&#x4E0D;&#x540C;&#xFF0C;&#x5206;&#x4E3A;&#x4EE5;&#x4E0B;&#x4E24;&#x7C7B;&#xFF1A;</li>
+</ol>
+<ul>
+<li>Parent &#x7ED3;&#x679C;&#x5185;&#x5D4C;&#x5230;&#x73B0;&#x6709;&#x7684;&#x805A;&#x5408;&#x5206;&#x6790;&#x7ED3;&#x679C;&#x4E2D;
+<ul>
+<li>Derivative</li>
+<li>Moving Average</li>
+<li>Cumulative Sum</li>
+</ul>
+</li>
+<li>Sibling &#x7ED3;&#x679C;&#x4E0E;&#x73B0;&#x6709;&#x805A;&#x5408;&#x5206;&#x6790;&#x7ED3;&#x679C;&#x540C;&#x7EA7;
+<ul>
+<li>Max/Min/Avg/Sum Bucket</li>
+<li>Stats/Extended Stats Bucket</li>
+<li>Percentiles Bucket</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>Sibling - Min Bucket - &#x627E;&#x51FA;&#x6240;&#x6709; Bucket &#x4E2D;&#x503C;&#x6700;&#x5C0F;&#x7684; Bucket &#x540D;&#x79F0;&#x548C;&#x503C;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;jobs&quot;: {
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;job.keyword&quot;,
+        &quot;size&quot;: 10
+      },
+      &quot;aggs&quot;: {
+        &quot;avg_salary&quot;: {
+          &quot;avg&quot;: {
+            &quot;field&quot;: &quot;salary&quot;
+          }
+        }
+      }
+    },
+    &quot;min_salary_by_job&quot;: {
+      &quot;min_bucket&quot;: {
+        &quot;buckets_path&quot;: &quot;jobs&gt;avg_salary&quot;
+      }
+    }
+  }
+}
+</code></pre><ol start="4">
+<li>Sibling - Max Bucket - &#x627E;&#x51FA;&#x6240;&#x6709; Bucket &#x4E2D;&#x503C;&#x6700;&#x5927;&#x7684; Bucket &#x540D;&#x79F0;&#x548C;&#x503C;</li>
+<li>Sibling - Avg Bucket - &#x8BA1;&#x7B97;&#x6240;&#x6709; Bucket &#x4E2D;&#x5E73;&#x5747;&#x503C;</li>
+<li>Sibling - Sum Bucket - &#x8BA1;&#x7B97;&#x6240;&#x6709; Bucket &#x503C;&#x7684;&#x603B;&#x548C;</li>
+<li>Sibling - Stats Bucket - &#x8BA1;&#x7B97;&#x6240;&#x6709; Bucket &#x503C;&#x7684;  Stats &#x5206;&#x6790;</li>
+<li>Sibling - Percentiles Bucket - &#x8BA1;&#x7B97;&#x6240;&#x6709; Bucket &#x503C;&#x7684;&#x767E;&#x5206;&#x4F4D;&#x6570;</li>
+<li>Parent - Derivative - &#x8BA1;&#x7B97; Bucket &#x503C;&#x7684;&#x5BFC;&#x6570;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;birth&quot;: {
+      &quot;date_histogram&quot;: {
+        &quot;field&quot;: &quot;birth&quot;,
+        &quot;interval&quot;: &quot;year&quot;,
+        &quot;min_doc_count&quot;: 0
+      },
+      &quot;aggs&quot;: {
+        &quot;avg_salary&quot;: {
+          &quot;avg&quot;: {
+            &quot;field&quot;: &quot;salary&quot;
+          }
+        },
+        &quot;derivative_avg_salary&quot;: {
+          &quot;derivative&quot;: {
+            &quot;buckets_path&quot;: &quot;avg_salary&quot;
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre><ol start="10">
+<li>Parent - Moving Acerage - &#x8BA1;&#x7B97; Bucket &#x503C;&#x7684;&#x79FB;&#x52A8;&#x5E73;&#x5747;&#x503C;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;birth&quot;: {
+      &quot;date_histogram&quot;: {
+        &quot;field&quot;: &quot;birth&quot;,
+        &quot;interval&quot;: &quot;year&quot;,
+        &quot;min_doc_count&quot;: 0
+      },
+      &quot;aggs&quot;: {
+        &quot;avg_salary&quot;: {
+          &quot;avg&quot;: {
+            &quot;field&quot;: &quot;salary&quot;
+          }
+        },
+        &quot;mavg_salary&quot;: {
+          &quot;moving_avg&quot;: {
+            &quot;buckets_path&quot;: &quot;avg_salary&quot;
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre><ol start="11">
+<li>Parent - Cumulative Sum - &#x8BA1;&#x7B97; Bucket &#x503C;&#x7684;&#x7D2F;&#x8BA1;&#x52A0;&#x548C;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;birth&quot;: {
+      &quot;date_histogram&quot;: {
+        &quot;field&quot;: &quot;birth&quot;,
+        &quot;interval&quot;: &quot;year&quot;,
+        &quot;min_doc_count&quot;: 0
+      },
+      &quot;aggs&quot;: {
+        &quot;avg_salary&quot;: {
+          &quot;avg&quot;: {
+            &quot;field&quot;: &quot;salary&quot;
+          }
+        },
+        &quot;cumulative_salary&quot;: {
+          &quot;cumulative_sum&quot;: {
+            &quot;buckets_path&quot;: &quot;avg_salary&quot;
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre><h3 class="mume-header" id="%E8%81%9A%E5%90%88%E5%88%86%E6%9E%90%E4%BD%9C%E7%94%A8%E8%8C%83%E5%9B%B4">&#x805A;&#x5408;&#x5206;&#x6790;&#x4F5C;&#x7528;&#x8303;&#x56F4;</h3>
+
+<ol>
+<li>es &#x805A;&#x5408;&#x5206;&#x6790;&#x9ED8;&#x8BA4;&#x4F5C;&#x7528;&#x8303;&#x56F4;&#x662F; query &#x7684;&#x7ED3;&#x679C;&#x96C6;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5982;&#x4E0B;&#x7684;&#x65B9;&#x5F0F;&#x6539;&#x53D8;&#x5176;&#x4F5C;&#x7528;&#x8303;&#x56F4;&#xFF1A;</li>
+</ol>
+<ul>
+<li>filter</li>
+<li>post_filter</li>
+<li>global</li>
+</ul>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;query&quot;: {
+    &quot;match&quot;: {
+      &quot;username&quot;: &quot;alfred&quot;
+    }
+  },
+  &quot;aggs&quot;: {
+    &quot;jobs&quot;: {
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;job.keyword&quot;,
+        &quot;size&quot;: 10
+      }
+    }
+  }
+}
+</code></pre><ol start="2">
+<li>filter - &#x4E3A;&#x67D0;&#x4E2A;&#x805A;&#x5408;&#x5206;&#x6790;&#x8BBE;&#x5B9A;&#x8FC7;&#x6EE4;&#x6761;&#x4EF6;&#xFF0C;&#x4ECE;&#x800C;&#x5728;&#x4E0D;&#x66F4;&#x6539;&#x6574;&#x4F53; query &#x8BED;&#x53E5;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x4FEE;&#x6539;&#x6765;&#x4F5C;&#x7528;&#x8303;&#x56F4;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;jobs_salary_small&quot;: {
+      &quot;filter&quot;: {
+        &quot;range&quot;: {
+          &quot;salary&quot;: {
+            &quot;to&quot;: 10000
+          }
+        }
+      },
+      &quot;aggs&quot;: {
+        &quot;jobs&quot;: {
+          &quot;terms&quot;: {
+            &quot;field&quot;: &quot;job.keyword&quot;
+          }
+        }
+      }
+    },
+    &quot;jobs&quot;: {
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;job.keyword&quot;
+      }
+    }
+  }
+}
+</code></pre><ol start="3">
+<li>post-filter - &#x4F5C;&#x7528;&#x4E8E;&#x6587;&#x6863;&#x8FC7;&#x6EE4;&#xFF0C;&#x4F46;&#x5728;&#x805A;&#x5408;&#x5206;&#x6790;&#x540E;&#x751F;&#x6548;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;aggs&quot;: {
+    &quot;jobs&quot;: {
+      &quot;terms&quot;: {
+        &quot;filed&quot;: &quot;job.keyword&quot;
+      }
+    }
+  },
+  &quot;post_filter&quot;: {
+    &quot;match&quot;: {
+      &quot;job.keyword&quot;: &quot;java engineer&quot;
+    }
+  }
+}
+</code></pre><ol start="4">
+<li>global - &#x65E0;&#x89C6; query &#x8FC7;&#x6EE4;&#x6761;&#x4EF6;&#xFF0C;&#x57FA;&#x4E8E;&#x5168;&#x90E8;&#x6587;&#x6863;&#x8FDB;&#x884C;&#x5206;&#x6790;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;query&quot;: {
+    &quot;match&quot;: {
+      &quot;job.keyword&quot;: &quot;java engineer&quot;
+    }
+  },
+  &quot;aggs&quot;: {
+    &quot;java_avg_salary&quot;: {
+      &quot;avg&quot;: {
+        &quot;field&quot;: &quot;salary&quot;
+      }
+    },
+    &quot;all&quot;: {
+      &quot;global&quot;: {},
+      &quot;aggs&quot;: {
+        &quot;avg_salary&quot;: {
+          &quot;avg&quot;: {
+            &quot;field&quot;: &quot;salary&quot;
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre><h3 class="mume-header" id="%E8%81%9A%E5%90%88%E5%88%86%E6%9E%90%E6%8E%92%E5%BA%8F">&#x805A;&#x5408;&#x5206;&#x6790;&#x6392;&#x5E8F;</h3>
+
+<ol>
+<li>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x81EA;&#x5E26;&#x7684;&#x5173;&#x952E;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#xFF0C;&#x6BD4;&#x5982;</li>
+</ol>
+<ul>
+<li>_count &#x6587;&#x6863;&#x6570;</li>
+<li>_key &#x6309;&#x7167; key &#x503C;&#x6392;&#x5E8F;</li>
+</ul>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;jobs&quot;: {
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;job.keyword&quot;,
+        &quot;size&quot;: 10,
+        &quot;order&quot;: [
+          {
+            &quot;_count&quot;: &quot;asc&quot;
+          },
+          {
+            &quot;_key&quot;: &quot;desc&quot;
+          }
+        ]
+      }
+    }
+  }
+}
+</code></pre><pre data-role="codeBlock" data-info class="language-"><code># &#x6309;&#x7167; job.keyword &#x8FDB;&#x884C;&#x5206;&#x6876;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x6BCF;&#x4E2A;&#x5206;&#x6876;&#x4E2D;&#x6309;&#x7167; avg_salary &#x964D;&#x5E8F;&#x6392;&#x5217;
+GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;jobs&quot;: {
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;job.keyword&quot;,
+        &quot;size&quot;: 10,
+        &quot;order&quot;: [
+          {
+            &quot;avg_salary&quot;: &quot;desc&quot; 
+          }
+        ]
+      },
+      &quot;aggs&quot;: {
+        &quot;avg_salary&quot;: {
+          &quot;avg&quot;: {
+            &quot;filed&quot;: &quot;salary&quot;
+          }
+        }
+      }
+    }
+  }
+}
+# &#x5982;&#x679C;&#x662F; stats &#x8FDB;&#x884C;&#x5206;&#x6790;&#xFF0C;&#x9700;&#x8981;&#x5728; order &#x4E2D;&#x6307;&#x5B9A;&#x662F;&#x54EA;&#x4E2A;&#x6307;&#x6807;
+GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;jobs&quot;: {
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;job.keyword&quot;,
+        &quot;size&quot;: 10,
+        &quot;order&quot;: [
+          {
+            &quot;stats_salary.sum&quot;: &quot;desc&quot; 
+          }
+        ]
+      },
+      &quot;aggs&quot;: {
+        &quot;avg_salary&quot;: {
+          &quot;stats&quot;: {
+            &quot;filed&quot;: &quot;salary&quot;
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre><h3 class="mume-header" id="min%E8%81%9A%E5%90%88%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B">Min&#x805A;&#x5408;&#x7684;&#x6267;&#x884C;&#x6D41;&#x7A0B;</h3>
+
+<p><img src="./images/es-Min%E8%81%9A%E5%90%88%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B.png" alt="es-Min&#x805A;&#x5408;&#x7684;&#x6267;&#x884C;&#x6D41;&#x7A0B;.png"></p>
+<h3 class="mume-header" id="terms-%E8%81%9A%E5%90%88%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B">Terms &#x805A;&#x5408;&#x7684;&#x6267;&#x884C;&#x6D41;&#x7A0B;</h3>
+
+<p><img src="./images/es-Terms%E8%81%9A%E5%90%88%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B.png" alt="es-Terms&#x805A;&#x5408;&#x7684;&#x6267;&#x884C;&#x6D41;&#x7A0B;.png"><br>
+<img src="./images/es-terms%E5%B9%B6%E4%B8%8D%E6%B0%B8%E8%BF%9C%E5%87%86%E7%A1%AE.png" alt="es-terms&#x5E76;&#x4E0D;&#x6C38;&#x8FDC;&#x51C6;&#x786E;.png"></p>
+<ol>
+<li>Terms &#x4E0D;&#x51C6;&#x786E;&#x7684;&#x539F;&#x56E0;</li>
+</ol>
+<ul>
+<li>&#x6570;&#x636E;&#x5206;&#x6563;&#x5728;&#x591A;&#x4E2A; Shard &#x4E0A;&#xFF0C;Coordinating Node &#x65E0;&#x6CD5;&#x5F97;&#x6089;&#x6570;&#x636E;&#x5168;&#x8C8C;</li>
+</ul>
+<ol start="2">
+<li>Terms &#x4E0D;&#x51C6;&#x786E;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6CD5;</li>
+</ol>
+<ul>
+<li>&#x8BBE;&#x7F6E; Shard &#x6570;&#x4E3A; 1&#xFF0C;&#x6D88;&#x9664;&#x6570;&#x636E;&#x5206;&#x6563;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x65E0;&#x6CD5;&#x627F;&#x8F7D;&#x5927;&#x6570;&#x636E;&#x91CF;</li>
+<li>&#x5408;&#x7406;&#x8BBE;&#x7F6E; Shard_Size &#x5927;&#x5C0F;&#xFF0C;&#x5373;&#x6BCF;&#x6B21;&#x4ECE; Shard &#x4E0A;&#x989D;&#x5916;&#x591A;&#x83B7;&#x53D6;&#x6570;&#x636E;&#xFF0C;&#x4EE5;&#x63D0;&#x5347;&#x51C6;&#x786E;&#x5EA6;</li>
+</ul>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;jobs&quot;: {
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;job.keyword&quot;,
+        &quot;size&quot;: 1,
+        &quot;shard_size&quot;: 10
+      }
+    }
+  }
+}
+</code></pre><ol start="3">
+<li>Shard_Size &#x7684;&#x5C0F;&#x7684;&#x8BBE;&#x5B9A;&#x65B9;&#x6CD5;</li>
+</ol>
+<ul>
+<li>terms &#x805A;&#x5408;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x4E2D;&#x6709;&#x5982;&#x4E0B;&#x4E24;&#x4E2A;&#x7EDF;&#x8BA1;&#x503C;&#xFF1A;
+<ul>
+<li>doc_count_error_upper_bound &#x88AB;&#x9057;&#x6F0F;&#x7684; term &#x53EF;&#x80FD;&#x7684;&#x6700;&#x5927;&#x503C;</li>
+<li>sum_other_doc_count &#x8FD4;&#x56DE;&#x7ED3;&#x679C; bucket &#x7684; term &#x5916;&#x5176;&#x4ED6; term &#x7684;&#x6587;&#x6863;&#x603B;&#x6570;</li>
+</ul>
+</li>
+<li>&#x8BBE;&#x5B9A; show_term_doc_count_error &#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x6BCF;&#x4E2A; bucket &#x8BEF;&#x7B97;&#x7684;&#x6700;&#x5927;&#x503C;</li>
+</ul>
+<pre data-role="codeBlock" data-info class="language-"><code>GET test_search_index/_search
+{
+  &quot;size&quot;: 0,
+  &quot;aggs&quot;: {
+    &quot;jobs&quot;: {
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;job.keyword&quot;,
+        &quot;size&quot;: 2,
+        &quot;show_term_doc_count_error&quot;: true
+      }
+    }
+  }
+}
+</code></pre><ol start="4">
+<li>Shard_Size &#x9ED8;&#x8BA4;&#x5927;&#x5C0F;&#x5982;&#x4E0B;</li>
+</ol>
+<ul>
+<li>shard_size = (size*1.5) + 10</li>
+</ul>
+<ol start="5">
+<li>&#x901A;&#x8FC7;&#x8C03;&#x6574; Sherd_Size &#x7684;&#x5927;&#x5C0F;&#x964D;&#x4F4E; doc_count_error_upper_bound &#x6765;&#x63D0;&#x5347;&#x51C6;&#x786E;&#x5EA6;</li>
+</ol>
+<ul>
+<li>&#x589E;&#x5927;&#x6765;&#x6574;&#x4F53;&#x7684;&#x8BA1;&#x7B97;&#x91CF;&#xFF0C;&#x4ECE;&#x800C;&#x964D;&#x4F4E;&#x6765;&#x54CD;&#x5E94;&#x65F6;&#x95F4;</li>
+</ul>
+<h3 class="mume-header" id="%E8%BF%91%E4%BC%BC%E7%BB%9F%E8%AE%A1%E7%AE%97%E6%B3%95">&#x8FD1;&#x4F3C;&#x7EDF;&#x8BA1;&#x7B97;&#x6CD5;</h3>
+
+<p><img src="./images/es-%E8%BF%91%E4%BC%BC%E7%BB%9F%E8%AE%A1%E7%AE%97%E6%B3%95.png" alt="es-&#x8FD1;&#x4F3C;&#x7EDF;&#x8BA1;&#x7B97;&#x6CD5;.png"></p>
+<ol>
+<li>&#x5728; ES &#x7684;&#x805A;&#x5408;&#x5206;&#x6790;&#x4E2D;&#xFF0C;Cardinality &#x548C; Percentile &#x5206;&#x6790;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x8FD1;&#x4F3C;&#x7EDF;&#x8BA1;&#x7B97;&#x6CD5;</li>
+</ol>
+<ul>
+<li>&#x7ED3;&#x679C;&#x662F;&#x8FD1;&#x4F3C;&#x51C6;&#x786E;&#x7684;&#xFF0C;&#x4F46;&#x4E0D;&#x4E00;&#x5B9A;&#x7CBE;&#x51C6;</li>
+<li>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x53C2;&#x6570;&#x7684;&#x8C03;&#x6574;&#x4F7F;&#x5176;&#x7ED3;&#x679C;&#x7CBE;&#x51C6;&#xFF0C;&#x4F46;&#x540C;&#x65F6;&#x4E5F;&#x610F;&#x5473;&#x7740;&#x66F4;&#x591A;&#x7684;&#x8BA1;&#x7B97;&#x65F6;&#x95F4;&#x548C;&#x66F4;&#x5927;&#x7684;&#x6027;&#x80FD;&#x6D88;&#x8017;</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
